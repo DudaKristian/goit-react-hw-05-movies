@@ -1,18 +1,30 @@
 import styles from "./Home.module.css"
 import { FetchTrending } from "../../../servise/FETCH"
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 
 
-const Home = () => {
+const Home = ({ movieId }) => {
     const [trending, setTrending] = useState([])
+    // const [movieId, setMovieId] = useState("")
         
     useEffect(() => {
-    FetchTrending(setTrending)
+        FetchTrending(setTrending)
+         
     }, [])
+
+    
 
     const trendingList = () => {
             return trending.map(({ id, title, name }) => 
-                <li key={id}><span>{title || name}</span></li>)
+                <li key={id} >
+                    <Link
+                        id={id}
+                        to={id}
+                        onClick={e => movieId(e.target.id)}>
+                        {title || name}
+                    </Link>
+                </li>)
     }   
 
     return (
@@ -28,3 +40,5 @@ const Home = () => {
 }
 
 export default Home
+
+// onClick = { e => movieId(e.target.id) }

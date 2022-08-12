@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import {FetchSearch} from '../../../servise/FETCH'
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import picture from "../../../images/errorImg.jpg"
 
 const Movies = ({movieId}) => {
@@ -20,7 +20,7 @@ const Movies = ({movieId}) => {
         }
         setSearchParams(`query=${request}`)
         setStatus("resolved")
-    },[result])
+    },[result, searchParams])
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -29,7 +29,16 @@ const Movies = ({movieId}) => {
 
     const searchList = () => {
         return result.map(({ id, title, name }) => 
-                <li key={id}><span>{title || name}</span></li>) 
+            <li key={id}>
+                <Link
+                    to={id}
+                    id={id}
+                    onClick={e => movieId(e.target.id)}
+                >
+                    {title || name}
+                </Link>
+            </li>
+        ) 
         }
 
     const onInputChange = e => {
@@ -52,7 +61,8 @@ const Movies = ({movieId}) => {
                 {searchList()}
             </ul>
 
-            {status === "error"  && <img src={picture} alt="error" />}
+            {status === "error" && <img src={picture} alt="error" />}
+            
         </div>
     )
 }
