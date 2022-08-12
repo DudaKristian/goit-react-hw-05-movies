@@ -4,27 +4,23 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
 
-const Home = ({ movieId }) => {
+const Home = ({ movieId, path }) => {
     const [trending, setTrending] = useState([])
-    // const [movieId, setMovieId] = useState("")
         
     useEffect(() => {
         FetchTrending(setTrending)
-         
     }, [])
 
-    
-
     const trendingList = () => {
-            return trending.map(({ id, title, name }) => 
-                <li key={id} >
-                    <Link
-                        id={id}
-                        to={id}
-                        onClick={e => movieId(e.target.id)}>
-                        {title || name}
-                    </Link>
-                </li>)
+        return trending.map(({ id, title, name }) => 
+            <li key={id} >
+                <Link
+                    id={id}
+                    to={`/movies/${id}`}
+                    onClick={e => movieId(e.target.id)}>
+                    {title || name}
+                </Link>
+            </li>)
     }   
 
     return (
@@ -41,4 +37,3 @@ const Home = ({ movieId }) => {
 
 export default Home
 
-// onClick = { e => movieId(e.target.id) }

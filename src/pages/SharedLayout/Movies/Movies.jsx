@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import {FetchSearch} from '../../../servise/FETCH'
-import { useSearchParams, Link } from "react-router-dom";
+import { useSearchParams, Link, } from "react-router-dom";
 import picture from "../../../images/errorImg.jpg"
 
 const Movies = ({movieId}) => {
@@ -20,7 +20,8 @@ const Movies = ({movieId}) => {
         }
         setSearchParams(`query=${request}`)
         setStatus("resolved")
-    },[result, searchParams])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[result, searchParams, setSearchParams])
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -31,7 +32,7 @@ const Movies = ({movieId}) => {
         return result.map(({ id, title, name }) => 
             <li key={id}>
                 <Link
-                    to={id}
+                    to={`/movies/${id}`}
                     id={id}
                     onClick={e => movieId(e.target.id)}
                 >
