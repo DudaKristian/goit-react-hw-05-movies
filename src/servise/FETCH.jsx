@@ -25,11 +25,14 @@ export async function FetchTrending(hook) {
     }
 };
 
-export async function FetchDetails(movieId) {
+export async function FetchDetails(movieId, hook) {
+    if (!movieId) {
+        return
+    }
     try {
         await fetch(`${fetchPrefix}movie/${movieId}?api_key=${KEY}&language=en-US`)
             .then(result => result.json())
-            //then logic
+            .then(arr =>  hook(arr))
     } catch (e) {
         alert(`${e}`)
     }

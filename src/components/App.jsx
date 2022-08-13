@@ -3,10 +3,9 @@ import SharedLayout from "../pages/SharedLayout/SharedLayout";
 import Home from "../pages/SharedLayout/Home/Home";
 import Movies from "../pages/SharedLayout/Movies/Movies";
 import MovieDetails from "./MovieDetails/MovieDetails"
+import NotFound from "./NotFound/NotFound"
 
 const App = () => {
-
-
 
   return (
     <Routes>
@@ -14,7 +13,8 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path="movies" element={<Movies />} />
         <Route path="movies/:movieId" element={<MovieDetails />}/>
-      </Route>  
+      </Route>
+      <Route path="*" element={<NotFound/>}/>
     </Routes>  
     );
   };
