@@ -1,5 +1,6 @@
+import AditionalInformation from "components/AditionalInformation/AditionalInformation";
 import { useEffect, useState } from "react";
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Link, Navigate, Outlet } from "react-router-dom";
 import { FetchDetails } from "../../servise/FETCH"
 import styles from "./movieDetails.module.css"
 
@@ -7,8 +8,6 @@ const MovieDetails = () => {
     const { movieId } = useParams();
     const [result, setResult] = useState("");
 
-    console.log(result)
-    
     useEffect(() => {
     FetchDetails(movieId, setResult)
     }, [movieId])
@@ -35,21 +34,25 @@ const MovieDetails = () => {
                 <img src={`https://image.tmdb.org/t/p/w500${poster_path}`}
                 alt={`ddd poster`}
                 height="400"  />
-                <div>
+                <div className={styles.info}>
                     <h1>{original_title}({releaseYear})</h1>
                     <span>User Score: {Math.round(vote_average * 10)}%</span>
                     <h2>Overview</h2>
                     <p>{overview}</p>
                     <h2>Genres</h2>
-                    <ul>
+                    <ul className={styles.genres}>
                         {genres.map(genre => (
-                            <li key={genre.id}>
+                            <li key={genre.id}
+                            className={styles.genres__item}>
                                 <span>{genre.name}</span>
                             </li>
                         ))}
                     </ul>
                 </div>
             </div>
+            <AditionalInformation />
+
+            <Outlet context={movieId} />   
         </div>
     )
 }

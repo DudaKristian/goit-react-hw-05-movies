@@ -1,4 +1,18 @@
 .wrapper {
     display: flex;
-    
+    margin-left: 20px;
+    max-width: 900px;
+}
+.genres{
+    display: flex;
+    padding-left: 0;
+}
+
+.genres__item{
+    list-style: none;
+    margin-right: 10px;
+}
+
+.info{
+    margin-left: 20px;
 }

@@ -1,0 +1,11 @@
+.adInfo{
+    margin-top: 10px;
+    border-top: solid grey 1px;
+    border-bottom: solid grey 1px;
+    padding-left: 20px;
+}
+
+.adInfo__list{
+    list-style: none;
+    padding-left: 0;
+}

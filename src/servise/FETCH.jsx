@@ -38,21 +38,21 @@ export async function FetchDetails(movieId, hook) {
     }
 };
 
-export async function FetchCredits(movieId) {
+export async function FetchCredits(movieId, hook) {
     try {
         await fetch(`${fetchPrefix}movie/${movieId}/credits?api_key=${KEY}&language=en-US`)
             .then(result => result.json())
-            //then logic
+            .then(arr =>  hook(arr.cast))
     } catch (e) {
         alert(`${e}`)
     }
 };
 
-export async function FetchRewiews(movieId) {
+export async function FetchRewiews(movieId, hook) {
     try {
         await fetch(`${fetchPrefix}movie/${movieId}/reviews?api_key=${KEY}&language=en-US&page=1`)
             .then(result => result.json())
-            //then logic
+            .then(arr =>  hook(arr.results))
     } catch (e) {
         alert(`${e}`)
     }
