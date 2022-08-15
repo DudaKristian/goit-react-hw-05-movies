@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import {FetchSearch} from '../../servise/FETCH'
-import { useSearchParams, Link } from "react-router-dom";
+import { useSearchParams, Link, useLocation } from "react-router-dom";
 import picture from "../../images/errorImg.jpg"
 
 const Movies = () => {
@@ -13,6 +13,8 @@ const Movies = () => {
     const [result, setResult] = useState([]);
     const [status, setStatus] = useState("resolved")
     
+    const location = useLocation();
+
     useEffect(() => {
         if (query) {
             setRequest(query)
@@ -55,7 +57,8 @@ const Movies = () => {
             <li key={id}>
                 <Link
                     to={`/movies/${id}`}
-                    id={id}
+                            id={id}
+                            state={{from: location}}
                 >
                     {title || name}
                 </Link>

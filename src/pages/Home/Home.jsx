@@ -1,11 +1,14 @@
 import styles from "./Home.module.css"
 import { FetchTrending } from "../../servise/FETCH"
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 
 const Home = () => {
     const [trending, setTrending] = useState([])
+
+    const location = useLocation()
+
         
     useEffect(() => {
         FetchTrending(setTrending)
@@ -19,7 +22,9 @@ const Home = () => {
             <li key={id} >
                 <Link
                     id={id}
-                    to={`/movies/${id}`}>
+                    to={`/movies/${id}`}
+                    state = {{from:location}}
+                        >
                     {title || name}
                 </Link>
             </li>)}
