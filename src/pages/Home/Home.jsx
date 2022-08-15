@@ -1,5 +1,5 @@
 import styles from "./Home.module.css"
-import { FetchTrending } from "../../../servise/FETCH"
+import { FetchTrending } from "../../servise/FETCH"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 

@@ -17,20 +17,25 @@ const Reviews = () => {
         return <Navigate to="*" replace />;
     }
 
+    const style = {
+        listStyle: "none"
+    }
+
     return (
         <div>
-            <ul>
                 {
-                    result.length !== 0 ? ( 
-                    result.map(({ id, content }) => (
-                    <li key={id}>
-                        <p>{content }</p>
-                        </li>))
+                result.length !== 0 ? ( 
+                    <ul>
+                        {result.map(({ id, content }) => (
+                            <li key={id} style={style}>
+                                <p>{content}</p>
+                            </li>
+                        ))}
+                    </ul>
                     ) : (
                         <p>We don't have any reviews for this movie</p>
                     )                    
                 }
-            </ul>
         </div>
     )
 }

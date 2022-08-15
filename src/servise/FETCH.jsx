@@ -4,11 +4,12 @@ export const fetchPrefix = "https://api.themoviedb.org/3/";
 
 
 export async function FetchSearch(request, hook) {
-    if(!request){return alert("Put in the request")}
+
     try {
         await fetch(`${fetchPrefix}search/movie?api_key=${KEY}&query=${request}&language=en-US&page=1`)
             .then(result => result.json())
             .then(arr => hook(arr.results))
+            
         
     } catch (e) {
         alert(`${e}`)

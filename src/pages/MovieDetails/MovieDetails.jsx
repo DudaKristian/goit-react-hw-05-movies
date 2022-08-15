@@ -1,13 +1,19 @@
-import AditionalInformation from "components/AditionalInformation/AditionalInformation";
-import { useEffect, useState } from "react";
-import { useParams, Link, Navigate, Outlet } from "react-router-dom";
+import Loader from "components/Loader/Loader";
+import { useEffect, useState, Suspense, lazy} from "react";
+import { useParams, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { FetchDetails } from "../../servise/FETCH"
 import styles from "./movieDetails.module.css"
 
-const MovieDetails = () => {
+
+const AditionalInformation = lazy(() => import("components/AditionalInformation/AditionalInformation"))
+
+const MovieDetails = ({query}) => {
     const { movieId } = useParams();
     const [result, setResult] = useState("");
 
+    const location = useLocation();
+    const navigate = useNavigate();
+    
     useEffect(() => {
     FetchDetails(movieId, setResult)
     }, [movieId])
@@ -15,6 +21,14 @@ const MovieDetails = () => {
     if (!result) { return }
     if (result.success === false) {
         return <Navigate to="*" replace />;
+    }
+
+    const onClick = () => {
+        if (location.key === "default") {
+            navigate("/", { replace: true })
+            return
+        }
+        navigate(`/movies?query=${query}`, { replace: true })
     }
     
     const { poster_path,
@@ -25,11 +39,14 @@ const MovieDetails = () => {
         genres
     } = result;
     
-    const releaseYear = release_date.slice(0, 4)
+    const releaseYear = release_date.slice(0, 4);
 
     return (
         <div>
-            <Link to="/">Go Back</Link>  <br />
+            <button onClick={onClick}>Go Back</button>
+            
+            <br />
+            
             <div className={styles.wrapper}>
                 <img src={`https://image.tmdb.org/t/p/w500${poster_path}`}
                 alt={`ddd poster`}
@@ -52,7 +69,9 @@ const MovieDetails = () => {
             </div>
             <AditionalInformation />
 
-            <Outlet context={movieId} />   
+            <Suspense fallback={<Loader />} >
+                <Outlet context={movieId} />   
+            </Suspense>    
         </div>
     )
 }
