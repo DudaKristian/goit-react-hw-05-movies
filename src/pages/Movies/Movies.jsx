@@ -3,17 +3,16 @@ import {FetchSearch} from '../../servise/FETCH'
 import { useSearchParams, Link } from "react-router-dom";
 import picture from "../../images/errorImg.jpg"
 
-const Movies = ({setProp}) => {
+const Movies = () => {
 
-    const [request, setRequest] = useState("");
-    const [result, setResult] = useState([]);
     const [searchParams, setSearchParams] = useSearchParams();
-    const [status, setStatus] = useState("resolved")
-    
+
     const query = searchParams.get('query')
 
-    setProp(query);
-
+    const [request, setRequest] = useState(query??"");
+    const [result, setResult] = useState([]);
+    const [status, setStatus] = useState("resolved")
+    
     useEffect(() => {
         if (query) {
             setRequest(query)

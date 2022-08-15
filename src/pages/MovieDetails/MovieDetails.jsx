@@ -1,19 +1,22 @@
 import Loader from "components/Loader/Loader";
 import { useEffect, useState, Suspense, lazy} from "react";
-import { useParams, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useParams, Navigate, Outlet, useLocation, Link } from "react-router-dom";
 import { FetchDetails } from "../../servise/FETCH"
 import styles from "./movieDetails.module.css"
 
 
 const AditionalInformation = lazy(() => import("components/AditionalInformation/AditionalInformation"))
 
-const MovieDetails = ({query}) => {
+const MovieDetails = () => {
     const { movieId } = useParams();
     const [result, setResult] = useState("");
 
     const location = useLocation();
-    const navigate = useNavigate();
     
+    const goBackLink = location.state?.from ?? "/";
+
+    console.log(goBackLink)
+
     useEffect(() => {
     FetchDetails(movieId, setResult)
     }, [movieId])
@@ -21,14 +24,6 @@ const MovieDetails = ({query}) => {
     if (!result) { return }
     if (result.success === false) {
         return <Navigate to="*" replace />;
-    }
-
-    const onClick = () => {
-        if (location.key === "default") {
-            navigate("/", { replace: true })
-            return
-        }
-        navigate(`/movies?query=${query}`, { replace: true })
     }
     
     const { poster_path,
@@ -43,7 +38,8 @@ const MovieDetails = ({query}) => {
 
     return (
         <div>
-            <button onClick={onClick}>Go Back</button>
+            
+            <Link to={goBackLink}>Go Back</Link>
             
             <br />
             
@@ -67,7 +63,7 @@ const MovieDetails = ({query}) => {
                     </ul>
                 </div>
             </div>
-            <AditionalInformation />
+            <AditionalInformation location={goBackLink} />
 
             <Suspense fallback={<Loader />} >
                 <Outlet context={movieId} />   
